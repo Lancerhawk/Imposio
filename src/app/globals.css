@@ -1,26 +1,76 @@
 @import "tailwindcss";
 
+/* ——————————————————————————————————————————
+   Design Tokens
+—————————————————————————————————————————— */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-inter: "Inter", system-ui, sans-serif;
+
+  /* Primary palette */
+  --color-red-50: #fff5f5;
+  --color-red-100: #ffe3e3;
+  --color-red-200: #ffbdbd;
+  --color-red-500: #e53e3e;
+  --color-red-600: #c53030;
+  --color-red-700: #9b2c2c;
+
+  /* Neutrals */
+  --color-stone-50: #fafaf9;
+  --color-stone-100: #f5f5f4;
+  --color-stone-200: #e7e5e4;
+  --color-stone-300: #d6d3d1;
+  --color-stone-400: #a8a29e;
+  --color-stone-500: #78716c;
+  --color-stone-600: #57534e;
+  --color-stone-700: #44403c;
+  --color-stone-800: #292524;
+  --color-stone-900: #1c1917;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ——————————————————————————————————————————
+   Base
+—————————————————————————————————————————— */
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ——————————————————————————————————————————
+   Custom Utilities
+—————————————————————————————————————————— */
+
+/* Font size utility for icon size 4.5 */
+.w-4\.5 {
+  width: 1.125rem;
+}
+.h-4\.5 {
+  height: 1.125rem;
+}
+
+/* Smooth scrolling for anchor links */
+a[href^="#"] {
+  text-decoration: none;
+}
+
+/* Custom selection colour */
+::selection {
+  background-color: #fee2e2;
+  color: #7f1d1d;
+}
+
+/* Focus ring */
+:focus-visible {
+  outline: 2px solid #c53030;
+  outline-offset: 2px;
+  border-radius: 4px;
 }
