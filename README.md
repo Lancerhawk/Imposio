@@ -2,7 +2,7 @@
 
 > Convert any PDF into a print-ready booklet in seconds — entirely in your browser.
 
-[![Version](https://img.shields.io/badge/version-0.1.0-red.svg)](./CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.1.1-red.svg)](./CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-stone.svg)](./LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-16.2.7-black.svg)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue.svg)](https://www.typescriptlang.org)
@@ -161,12 +161,15 @@ flowchart TD
 
 ```
 imposio/
+├── .github/
+│   └── workflows/
+│       └── ci.yml              # GitHub Actions CI workflow (lint, check, test)
 ├── src/
 │   ├── app/
 │   │   ├── layout.tsx          # Root layout — Inter font, SEO metadata
 │   │   ├── page.tsx            # Main page — full workflow state machine
 │   │   └── globals.css         # Tailwind v4 import + design tokens
-│   │
+   │
 │   ├── components/
 │   │   ├── Hero.tsx            # Landing hero section
 │   │   ├── Features.tsx        # 4-card feature grid
@@ -176,14 +179,15 @@ imposio/
 │   │   ├── BookletOptions.tsx  # Booklet stats + imposition preview
 │   │   ├── ProgressBar.tsx     # Animated progress bar
 │   │   └── DownloadCard.tsx    # Success + download + print instructions
-│   │
+   │
 │   ├── lib/
 │   │   ├── booklet.ts          # Core imposition algorithm
+│   │   ├── booklet.test.ts     # Booklet algorithm unit tests
 │   │   └── pdf-utils.ts        # PDF analysis, generation, download utils
-│   │
+   │
 │   └── types/
 │       └── pdf.ts              # TypeScript interfaces & types
-│
+   │
 ├── public/                     # Static assets
 ├── CHANGELOG.md                # Version history
 ├── package.json                # Dependencies & scripts
@@ -231,6 +235,26 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+### Run Linter and Code Formatting Checks
+
+```bash
+npm run lint
+```
+
+### Run Unit Tests (Vitest)
+
+```bash
+npm run test
+# or run once without watch mode:
+npx vitest run
+```
+
+### Run TypeScript Compiler Type Checks
+
+```bash
+npm run type-check
+```
+
 ### Build for Production
 
 ```bash
@@ -260,7 +284,7 @@ Imposio correctly handles:
 - PDFs with embedded images, fonts, and vector graphics
 - Large PDFs (progress bar shows generation status)
 
-Limitations in v0.1.0:
+Limitations in v0.1.1:
 
 - Encrypted/password-protected PDFs are not supported
 - Mixed page sizes use the first page as the reference dimension

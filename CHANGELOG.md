@@ -6,6 +6,30 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [0.1.1] — 2026-06-02
+
+### Added
+- **Unit Testing Suite** (`src/lib/booklet.test.ts`):
+  - Comprehensive unit test coverage using **Vitest** for booklet page calculations, padding logic, imposition calculations, and sequence flattening.
+- **GitHub Actions CI Pipeline** (`.github/workflows/ci.yml`):
+  - Automated continuous integration runner to execute lint checks, TypeScript type-checks, and Vitest unit tests automatically on push and pull requests to `main`.
+
+### Changed
+- **Professional Loading States**:
+  - Replaced basic analysis text loader with a sophisticated, dual-ring pulsing branded loader for the PDF upload parsing step.
+  - Upgraded the booklet generation screen with dynamic stage-by-stage status indicators (`Loading source`, `Imposing pages`, `Saving PDF`).
+  - Added a file preparation state ("Preparing Download...") with a loading spinner to the booklet download button to prevent double-clicks and provide visual feedback.
+- **Global Pointer Cursor**:
+  - Added global stylesheet rules in `src/app/globals.css` ensuring all interactive buttons and anchor tags display the `pointer` cursor on hover, and `not-allowed` when disabled.
+- **Linter Command Update**:
+  - Replaced `next lint` with direct `eslint .` execution to support ESLint flat configurations on Next.js 16 projects correctly.
+
+### Fixed
+- **Spine Gutter (Fold Margin)**:
+  - Integrated custom margin space between pages on imposed sheets to ensure the text isn't lost in the fold.
+
+---
+
 ## [0.1.0] — 2026-06-02
 
 ### Initial Release
@@ -75,4 +99,5 @@ First functional version of Imposio — a fully client-side PDF booklet impositi
 
 ---
 
-[0.1.0]: https://github.com/your-org/imposio/releases/tag/v0.1.0
+[0.1.1]: https://github.com/Lancerhawk/Imposio/releases/tag/v0.1.1
+[0.1.0]: https://github.com/Lancerhawk/Imposio/releases/tag/v0.1.0
