@@ -1,12 +1,8 @@
 @import "tailwindcss";
 
-/* ——————————————————————————————————————————
-   Design Tokens
-—————————————————————————————————————————— */
 :root {
   --font-inter: "Inter", system-ui, sans-serif;
 
-  /* Primary palette */
   --color-red-50: #fff5f5;
   --color-red-100: #ffe3e3;
   --color-red-200: #ffbdbd;
@@ -14,7 +10,6 @@
   --color-red-600: #c53030;
   --color-red-700: #9b2c2c;
 
-  /* Neutrals */
   --color-stone-50: #fafaf9;
   --color-stone-100: #f5f5f4;
   --color-stone-200: #e7e5e4;
@@ -27,9 +22,6 @@
   --color-stone-900: #1c1917;
 }
 
-/* ——————————————————————————————————————————
-   Base
-—————————————————————————————————————————— */
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -45,11 +37,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ——————————————————————————————————————————
-   Custom Utilities
-—————————————————————————————————————————— */
-
-/* Font size utility for icon size 4.5 */
 .w-4\.5 {
   width: 1.125rem;
 }
@@ -57,18 +44,15 @@ body {
   height: 1.125rem;
 }
 
-/* Smooth scrolling for anchor links */
 a[href^="#"] {
   text-decoration: none;
 }
 
-/* Custom selection colour */
 ::selection {
   background-color: #fee2e2;
   color: #7f1d1d;
 }
 
-/* Focus ring */
 :focus-visible {
   outline: 2px solid #c53030;
   outline-offset: 2px;

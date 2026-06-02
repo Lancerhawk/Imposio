@@ -19,7 +19,6 @@ export default function DownloadCard({ pdfInfo, bookletBytes, onReset }: Downloa
 
   return (
     <div className="bg-white rounded-2xl border-2 border-red-100 shadow-sm overflow-hidden">
-      {/* Success banner */}
       <div className="bg-gradient-to-r from-red-600 to-red-700 px-6 py-5 text-white">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
@@ -33,7 +32,6 @@ export default function DownloadCard({ pdfInfo, bookletBytes, onReset }: Downloa
       </div>
 
       <div className="p-6 space-y-4">
-        {/* File details */}
         <div className="bg-stone-50 rounded-xl border border-stone-100 p-4 space-y-3">
           <div className="flex items-center justify-between text-sm">
             <span className="text-stone-500 font-medium">Output File</span>
@@ -53,7 +51,6 @@ export default function DownloadCard({ pdfInfo, bookletBytes, onReset }: Downloa
           </div>
         </div>
 
-        {/* Print instructions */}
         <div className="bg-stone-900 text-stone-100 rounded-xl p-4 text-sm space-y-2">
           <p className="font-semibold text-white text-xs uppercase tracking-wider mb-3">Printing Instructions</p>
           {[
@@ -73,7 +70,6 @@ export default function DownloadCard({ pdfInfo, bookletBytes, onReset }: Downloa
           ))}
         </div>
 
-        {/* Action buttons */}
         <button
           id="download-booklet-btn"
           onClick={handleDownload}

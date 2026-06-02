@@ -59,7 +59,6 @@ export default function UploadZone({ onFileAccepted, disabled }: UploadZoneProps
       >
         <input {...getInputProps()} id="pdf-upload-input" />
         <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
-          {/* Icon container */}
           <div
             className={`
               w-20 h-20 rounded-2xl flex items-center justify-center mb-6

@@ -2,9 +2,6 @@ import { PDFDocument } from "pdf-lib";
 import { PdfInfo } from "@/types/pdf";
 import { computeBookletInfo, generateImpositionSequence } from "./booklet";
 
-/**
- * Analyzes a PDF file and returns its metadata.
- */
 export async function analyzePdf(file: File): Promise<PdfInfo> {
   const arrayBuffer = await file.arrayBuffer();
   const pdfDoc = await PDFDocument.load(arrayBuffer, {
@@ -19,17 +16,8 @@ export async function analyzePdf(file: File): Promise<PdfInfo> {
   };
 }
 
-/**
- * Generates a booklet PDF from the source file.
- * Returns a Uint8Array of the resulting PDF bytes.
- *
- * Algorithm:
- * 1. Load the source PDF.
- * 2. Calculate imposition order.
- * 3. Create a new PDF where each page is landscape (2× original width).
- * 4. For each slot in the imposition sequence, embed the original page (or blank).
- * 5. Pair slots into output sheets: 2 slots per output page.
- */
+const GUTTER_PT = 28;
+
 export async function generateBookletPdf(
   file: File,
   onProgress?: (progress: number) => void
@@ -46,37 +34,35 @@ export async function generateBookletPdf(
 
   onProgress?.(20);
 
-  // Use the dimensions of the first page as reference
   const refPage = srcPages[0];
   const { width: pageW, height: pageH } = refPage.getSize();
 
-  // Output page is landscape: two source pages side-by-side
-  const outW = pageW * 2;
+  const outW = pageW * 2 + GUTTER_PT * 2;
   const outH = pageH;
 
-  // Create output PDF
+  const halfZoneW = pageW;
+  const contentW = pageW - GUTTER_PT;
+
   const outPdf = await PDFDocument.create();
 
-  const totalOutputPages = sequence.length / 2; // 2 slots per output page
+  const totalOutputPages = sequence.length / 2;
   let processed = 0;
 
   for (let i = 0; i < sequence.length; i += 2) {
-    const leftSlot = sequence[i]; // 1-based page number or 0 for blank
+    const leftSlot = sequence[i];
     const rightSlot = sequence[i + 1];
 
     const outPage = outPdf.addPage([outW, outH]);
 
-    // Embed left page
     if (leftSlot > 0 && leftSlot <= originalPageCount) {
       const [embeddedLeft] = await outPdf.embedPages([srcPages[leftSlot - 1]]);
       const srcSize = srcPages[leftSlot - 1].getSize();
-      // Scale to fit
-      const scaleX = pageW / srcSize.width;
-      const scaleY = pageH / srcSize.height;
+      const scaleX = contentW / srcSize.width;
+      const scaleY = outH / srcSize.height;
       const scale = Math.min(scaleX, scaleY);
       const drawW = srcSize.width * scale;
       const drawH = srcSize.height * scale;
-      const xOffset = (pageW - drawW) / 2;
+      const xOffset = (contentW - drawW) / 2;
       const yOffset = (outH - drawH) / 2;
       outPage.drawPage(embeddedLeft, {
         x: xOffset,
@@ -86,18 +72,18 @@ export async function generateBookletPdf(
       });
     }
 
-    // Embed right page
     if (rightSlot > 0 && rightSlot <= originalPageCount) {
       const [embeddedRight] = await outPdf.embedPages([
         srcPages[rightSlot - 1],
       ]);
       const srcSize = srcPages[rightSlot - 1].getSize();
-      const scaleX = pageW / srcSize.width;
-      const scaleY = pageH / srcSize.height;
+      const scaleX = contentW / srcSize.width;
+      const scaleY = outH / srcSize.height;
       const scale = Math.min(scaleX, scaleY);
       const drawW = srcSize.width * scale;
       const drawH = srcSize.height * scale;
-      const xOffset = pageW + (pageW - drawW) / 2;
+      const rightZoneStart = halfZoneW + GUTTER_PT * 2;
+      const xOffset = rightZoneStart + (contentW - drawW) / 2;
       const yOffset = (outH - drawH) / 2;
       outPage.drawPage(embeddedRight, {
         x: xOffset,
@@ -118,27 +104,18 @@ export async function generateBookletPdf(
   return bytes;
 }
 
-/**
- * Formats file size in human-readable form.
- */
 export function formatFileSize(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-/**
- * Returns output filename for the booklet PDF.
- */
 export function getBookletFileName(originalName: string): string {
   const dotIndex = originalName.lastIndexOf(".");
   if (dotIndex === -1) return `${originalName}-Booklet.pdf`;
   return `${originalName.substring(0, dotIndex)}-Booklet.pdf`;
 }
 
-/**
- * Triggers a browser download of the given Uint8Array as a PDF.
- */
 export function downloadPdf(bytes: Uint8Array, fileName: string): void {
   const blob = new Blob([bytes.buffer as ArrayBuffer], { type: "application/pdf" });
   const url = URL.createObjectURL(blob);

@@ -9,20 +9,17 @@ interface HeroProps {
 export default function Hero({ onUploadClick }: HeroProps) {
   return (
     <section className="relative text-center py-20 px-4 overflow-hidden">
-      {/* Background decorative elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute -top-24 -right-24 w-96 h-96 bg-red-100 rounded-full opacity-40 blur-3xl" />
         <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-red-50 rounded-full opacity-60 blur-3xl" />
       </div>
 
       <div className="relative max-w-3xl mx-auto">
-        {/* Badge */}
         <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200 text-red-600 px-4 py-1.5 rounded-full text-sm font-medium mb-6">
           <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
           100% Browser-Based · No Upload Required
         </div>
 
-        {/* Main heading */}
         <h1 className="text-5xl md:text-6xl font-extrabold text-stone-900 mb-4 leading-tight tracking-tight">
           Impo
           <span className="text-red-600">sio</span>

@@ -33,7 +33,6 @@ export default function PdfInfoCard({ pdfInfo, onReset }: PdfInfoCardProps) {
 
   return (
     <div className="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
-      {/* Header */}
       <div className="flex items-center justify-between px-6 py-4 border-b border-stone-100 bg-stone-50">
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 rounded-full bg-red-500"></div>
@@ -51,7 +50,6 @@ export default function PdfInfoCard({ pdfInfo, onReset }: PdfInfoCardProps) {
         </button>
       </div>
 
-      {/* Stats */}
       <div className="p-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
         {stats.map(({ icon: Icon, label, value, truncate }) => (
           <div

@@ -79,13 +79,11 @@ export default function BookletOptions({
     },
   ];
 
-  // Show at most 8 sheets in the preview to avoid overflow
   const previewSheets = bookletInfo.impositionOrder.slice(0, 8);
   const hasMore = bookletInfo.impositionOrder.length > 8;
 
   return (
     <div className="bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden">
-      {/* Header */}
       <div className="flex items-center gap-2 px-6 py-4 border-b border-stone-100 bg-stone-50">
         <div className="w-2 h-2 rounded-full bg-red-500"></div>
         <span className="text-sm font-semibold text-stone-600 uppercase tracking-wider">
@@ -94,7 +92,6 @@ export default function BookletOptions({
       </div>
 
       <div className="p-6 space-y-6">
-        {/* Summary stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {summaryStats.map(({ icon: Icon, label, value, color, bg, iconColor, iconBg }) => (
             <div key={label} className={`${bg} rounded-xl border border-stone-100 p-4 text-center`}>
@@ -107,19 +104,16 @@ export default function BookletOptions({
           ))}
         </div>
 
-        {/* Imposition order preview */}
         <div>
           <h3 className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">
             Imposition Order Preview
           </h3>
           <div className="border border-stone-200 rounded-xl overflow-hidden">
-            {/* Header row */}
             <div className="grid grid-cols-3 gap-3 px-4 py-2 bg-stone-800 text-white text-xs font-medium">
               <div className="text-center">Sheet</div>
               <div className="text-center">Front (Left | Right)</div>
               <div className="text-center">Back (Left | Right)</div>
             </div>
-            {/* Rows */}
             <div className="divide-y divide-stone-100 px-4 py-2 space-y-2">
               {previewSheets.map((sheet) => (
                 <div key={sheet.sheetNumber} className="pt-2 first:pt-0">
@@ -135,7 +129,6 @@ export default function BookletOptions({
           </div>
         </div>
 
-        {/* Info note */}
         <div className="flex items-start gap-3 p-4 bg-red-50 border border-red-100 rounded-xl">
           <BookOpen className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" strokeWidth={1.75} />
           <p className="text-xs text-red-700 leading-relaxed">
@@ -144,7 +137,6 @@ export default function BookletOptions({
           </p>
         </div>
 
-        {/* Generate button */}
         <button
           id="generate-booklet-btn"
           onClick={onGenerate}

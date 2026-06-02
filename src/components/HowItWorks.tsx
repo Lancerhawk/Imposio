@@ -36,13 +36,11 @@ export default function HowItWorks() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {steps.map((step, index) => (
             <div key={step.number} className="relative">
-              {/* Connector line (hidden on last item) */}
               {index < steps.length - 1 && (
                 <div className="hidden lg:block absolute top-6 left-[calc(50%+32px)] right-[-50%] h-px bg-stone-300 z-0" />
               )}
 
               <div className="relative z-10 text-center">
-                {/* Step number bubble */}
                 <div className="w-12 h-12 rounded-full bg-red-600 text-white text-sm font-bold flex items-center justify-center mx-auto mb-4 shadow-md">
                   {step.number}
                 </div>

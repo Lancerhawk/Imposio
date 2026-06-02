@@ -78,7 +78,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white font-sans">
-      {/* Nav */}
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-stone-200">
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -107,10 +106,8 @@ export default function Home() {
       </nav>
 
       <main>
-        {/* Hero */}
         <Hero onUploadClick={handleHeroUploadClick} />
 
-        {/* Tool Section */}
         <section
           ref={toolSectionRef}
           className="py-16 px-4 bg-stone-50 border-y border-stone-200"
@@ -127,12 +124,10 @@ export default function Home() {
             </div>
 
             <div className="space-y-5">
-              {/* Step: Upload */}
               {appStep === "upload" && (
                 <UploadZone onFileAccepted={handleFileAccepted} />
               )}
 
-              {/* Step: Analyzing */}
               {appStep === "analyze" && (
                 <div className="bg-white border border-stone-200 rounded-2xl p-10 flex flex-col items-center gap-4">
                   <div className="w-14 h-14 rounded-full border-4 border-red-200 border-t-red-600 animate-spin" />
@@ -140,7 +135,6 @@ export default function Home() {
                 </div>
               )}
 
-              {/* Step: Options */}
               {appStep === "options" && pdfInfo && bookletInfo && (
                 <>
                   <PdfInfoCard pdfInfo={pdfInfo} onReset={handleReset} />
@@ -152,7 +146,6 @@ export default function Home() {
                 </>
               )}
 
-              {/* Step: Generating */}
               {appStep === "generating" && pdfInfo && bookletInfo && (
                 <>
                   <PdfInfoCard pdfInfo={pdfInfo} onReset={handleReset} />
@@ -171,7 +164,6 @@ export default function Home() {
                 </>
               )}
 
-              {/* Step: Done */}
               {appStep === "done" && pdfInfo && bookletBytes && (
                 <>
                   <PdfInfoCard pdfInfo={pdfInfo} onReset={handleReset} />
@@ -183,7 +175,6 @@ export default function Home() {
                 </>
               )}
 
-              {/* Step: Error */}
               {appStep === "error" && (
                 <div className="bg-white border border-red-200 rounded-2xl p-8 space-y-4">
                   <div className="flex items-start gap-3">
@@ -207,14 +198,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Features */}
         <Features />
 
-        {/* How It Works */}
         <HowItWorks />
       </main>
 
-      {/* Footer */}
       <footer className="border-t border-stone-200 bg-stone-50">
         <div className="max-w-6xl mx-auto px-4 py-10 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
