@@ -129,9 +129,26 @@ export default function Home() {
               )}
 
               {appStep === "analyze" && (
-                <div className="bg-white border border-stone-200 rounded-2xl p-10 flex flex-col items-center gap-4">
-                  <div className="w-14 h-14 rounded-full border-4 border-red-200 border-t-red-600 animate-spin" />
-                  <p className="text-stone-600 font-medium">Analyzing PDF…</p>
+                <div className="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm">
+                  <div className="bg-gradient-to-r from-red-600 to-red-700 h-1 w-full">
+                    <div className="h-full bg-white/30 animate-pulse" style={{ width: "60%" }} />
+                  </div>
+                  <div className="p-10 flex flex-col items-center gap-5">
+                    <div className="relative">
+                      <div className="w-16 h-16 rounded-full border-4 border-red-100" />
+                      <div className="absolute inset-0 w-16 h-16 rounded-full border-4 border-transparent border-t-red-600 animate-spin" />
+                      <div className="absolute inset-2 w-12 h-12 rounded-full border-2 border-transparent border-t-red-300 animate-spin" style={{ animationDuration: "0.6s" }} />
+                    </div>
+                    <div className="text-center">
+                      <p className="font-semibold text-stone-800 text-base mb-1">Reading PDF…</p>
+                      <p className="text-sm text-stone-400">Extracting page count and metadata</p>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 bg-red-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                      <span className="w-1.5 h-1.5 bg-red-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                      <span className="w-1.5 h-1.5 bg-red-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                    </div>
+                  </div>
                 </div>
               )}
 
@@ -149,17 +166,42 @@ export default function Home() {
               {appStep === "generating" && pdfInfo && bookletInfo && (
                 <>
                   <PdfInfoCard pdfInfo={pdfInfo} onReset={handleReset} />
-                  <div className="bg-white border border-stone-200 rounded-2xl p-8 space-y-5">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full border-4 border-red-200 border-t-red-600 animate-spin flex-shrink-0" />
+                  <div className="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm">
+                    <div className="bg-stone-800 px-6 py-4 flex items-center gap-4">
+                      <div className="relative flex-shrink-0">
+                        <div className="w-10 h-10 rounded-full border-3 border-stone-600" />
+                        <div className="absolute inset-0 w-10 h-10 rounded-full border-3 border-transparent border-t-red-500 animate-spin" />
+                      </div>
                       <div>
-                        <p className="font-semibold text-stone-800">Generating Booklet PDF</p>
-                        <p className="text-sm text-stone-400">
-                          Processing {bookletInfo.finalPages} pages into {bookletInfo.sheetCount} sheets…
+                        <p className="font-semibold text-white text-sm">Generating Booklet PDF</p>
+                        <p className="text-xs text-stone-400 mt-0.5">
+                          {bookletInfo.finalPages} pages → {bookletInfo.sheetCount} sheets
                         </p>
                       </div>
+                      <span className="ml-auto text-2xl font-bold text-red-400">{progress}%</span>
                     </div>
-                    <ProgressBar progress={progress} label="Progress" />
+                    <div className="p-6 space-y-4">
+                      <ProgressBar progress={progress} />
+                      <div className="grid grid-cols-3 gap-3 text-center">
+                        {[
+                          { label: "Loading source", done: progress >= 10 },
+                          { label: "Imposing pages", done: progress >= 50 },
+                          { label: "Saving PDF", done: progress >= 98 },
+                        ].map(({ label, done }) => (
+                          <div
+                            key={label}
+                            className={`text-xs py-2 px-3 rounded-lg border transition-all duration-500 ${
+                              done
+                                ? "bg-red-50 border-red-200 text-red-700 font-medium"
+                                : "bg-stone-50 border-stone-200 text-stone-400"
+                            }`}
+                          >
+                            <span className="mr-1">{done ? "✓" : "○"}</span>
+                            {label}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </>
               )}

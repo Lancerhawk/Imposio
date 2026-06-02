@@ -1,6 +1,7 @@
 "use client";
 
-import { Download, CheckCircle, RefreshCw } from "lucide-react";
+import { useState } from "react";
+import { Download, CheckCircle, RefreshCw, Loader2 } from "lucide-react";
 import { PdfInfo } from "@/types/pdf";
 import { downloadPdf, getBookletFileName, formatFileSize } from "@/lib/pdf-utils";
 
@@ -12,9 +13,14 @@ interface DownloadCardProps {
 
 export default function DownloadCard({ pdfInfo, bookletBytes, onReset }: DownloadCardProps) {
   const fileName = getBookletFileName(pdfInfo.fileName);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   const handleDownload = () => {
-    downloadPdf(bookletBytes, fileName);
+    setIsDownloading(true);
+    setTimeout(() => {
+      downloadPdf(bookletBytes, fileName);
+      setIsDownloading(false);
+    }, 1000);
   };
 
   return (
@@ -73,14 +79,25 @@ export default function DownloadCard({ pdfInfo, bookletBytes, onReset }: Downloa
         <button
           id="download-booklet-btn"
           onClick={handleDownload}
+          disabled={isDownloading}
           className="
-            w-full py-4 px-6 bg-red-600 hover:bg-red-700
+            w-full py-4 px-6 bg-red-600 hover:bg-red-700 disabled:bg-red-700/80
             text-white font-bold rounded-xl transition-all duration-200
             shadow-sm hover:shadow-md flex items-center justify-center gap-2 text-base
+            disabled:cursor-not-allowed
           "
         >
-          <Download className="w-5 h-5" strokeWidth={2} />
-          Download Booklet PDF
+          {isDownloading ? (
+            <>
+              <Loader2 className="w-5 h-5 animate-spin" strokeWidth={2} />
+              Preparing Download…
+            </>
+          ) : (
+            <>
+              <Download className="w-5 h-5" strokeWidth={2} />
+              Download Booklet PDF
+            </>
+          )}
         </button>
 
         <button

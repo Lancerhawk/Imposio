@@ -37,6 +37,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+a {
+  cursor: pointer;
+}
+
 .w-4\.5 {
   width: 1.125rem;
 }
