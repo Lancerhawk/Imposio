@@ -20,10 +20,24 @@ const GUTTER_PT = 28;
 
 export async function generateBookletPdf(
   file: File,
-  onProgress?: (progress: number) => void
+  onProgress?: (progress: number) => void,
+  selectedPages?: number[]
 ): Promise<Uint8Array> {
   const arrayBuffer = await file.arrayBuffer();
-  const srcPdf = await PDFDocument.load(arrayBuffer);
+  const fullPdf = await PDFDocument.load(arrayBuffer);
+
+  let srcPdf = fullPdf;
+  if (selectedPages && selectedPages.length < fullPdf.getPageCount()) {
+    srcPdf = await PDFDocument.create();
+    const copied = await srcPdf.copyPages(
+      fullPdf,
+      selectedPages.map((p) => p - 1)
+    );
+    for (const page of copied) {
+      srcPdf.addPage(page);
+    }
+  }
+
   const srcPages = srcPdf.getPages();
   const originalPageCount = srcPages.length;
 

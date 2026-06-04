@@ -70,3 +70,62 @@ a[href^="#"] {
   outline-offset: 2px;
   border-radius: 4px;
 }
+
+.pageselector-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0);
+  backdrop-filter: blur(0px);
+  transition: background 0.25s ease, backdrop-filter 0.25s ease;
+  padding: 1rem;
+}
+
+.pageselector-backdrop--visible {
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+}
+
+.pageselector-modal {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 56rem;
+  max-height: 90vh;
+  background: white;
+  border-radius: 1.25rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  transform: scale(0.95) translateY(10px);
+  opacity: 0;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+}
+
+.pageselector-modal--visible {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.pageselector-card {
+  cursor: pointer;
+}
+
+.pageselector-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.pageselector-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.pageselector-scrollbar::-webkit-scrollbar-thumb {
+  background: #d6d3d1;
+  border-radius: 3px;
+}
+
+.pageselector-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #a8a29e;
+}

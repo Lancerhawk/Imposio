@@ -15,6 +15,7 @@ import ProgressBar from "@/components/ProgressBar";
 import { PdfInfo, BookletInfo } from "@/types/pdf";
 import { analyzePdf, generateBookletPdf } from "@/lib/pdf-utils";
 import { computeBookletInfo } from "@/lib/booklet";
+import PageSelectorModal from "@/components/PageSelectorModal";
 
 type AppStep = "upload" | "analyze" | "options" | "generating" | "done" | "error";
 
@@ -25,6 +26,8 @@ export default function Home() {
   const [bookletBytes, setBookletBytes] = useState<Uint8Array | null>(null);
   const [progress, setProgress] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [selectedPages, setSelectedPages] = useState<number[]>([]);
+  const [showPageSelector, setShowPageSelector] = useState(false);
 
   const toolSectionRef = useRef<HTMLDivElement>(null);
 
@@ -37,9 +40,8 @@ export default function Home() {
     setErrorMessage("");
     try {
       const info = await analyzePdf(file);
-      const bInfo = computeBookletInfo(info.pageCount);
       setPdfInfo(info);
-      setBookletInfo(bInfo);
+      setShowPageSelector(true);
       setAppStep("options");
     } catch (err) {
       console.error(err);
@@ -48,12 +50,25 @@ export default function Home() {
     }
   }, []);
 
+  const handlePageSelectionDone = useCallback((pages: number[]) => {
+    setSelectedPages(pages);
+    setShowPageSelector(false);
+    const bInfo = computeBookletInfo(pages.length);
+    setBookletInfo(bInfo);
+  }, []);
+
   const handleGenerate = useCallback(async () => {
     if (!pdfInfo) return;
     setAppStep("generating");
     setProgress(0);
     try {
-      const bytes = await generateBookletPdf(pdfInfo.file, (p) => setProgress(p));
+      const bytes = await generateBookletPdf(
+        pdfInfo.file,
+        (p) => setProgress(p),
+        selectedPages.length > 0 && selectedPages.length < pdfInfo.pageCount
+          ? selectedPages
+          : undefined
+      );
       setBookletBytes(bytes);
       setAppStep("done");
     } catch (err) {
@@ -61,12 +76,14 @@ export default function Home() {
       setErrorMessage("Failed to generate booklet PDF. Please try a different file.");
       setAppStep("error");
     }
-  }, [pdfInfo]);
+  }, [pdfInfo, selectedPages]);
 
   const handleReset = useCallback(() => {
     setPdfInfo(null);
     setBookletInfo(null);
     setBookletBytes(null);
+    setSelectedPages([]);
+    setShowPageSelector(false);
     setProgress(0);
     setErrorMessage("");
     setAppStep("upload");
@@ -152,14 +169,31 @@ export default function Home() {
                 </div>
               )}
 
-              {appStep === "options" && pdfInfo && bookletInfo && (
+              {appStep === "options" && pdfInfo && (
                 <>
                   <PdfInfoCard pdfInfo={pdfInfo} onReset={handleReset} />
-                  <BookletOptions
-                    bookletInfo={bookletInfo}
-                    onGenerate={handleGenerate}
-                    isGenerating={false}
-                  />
+                  {selectedPages.length > 0 && selectedPages.length < pdfInfo.pageCount && (
+                    <div className="flex items-center justify-between px-4 py-2.5 bg-red-50 border border-red-100 rounded-xl text-sm">
+                      <span className="text-red-700">
+                        Using <span className="font-semibold">{selectedPages.length}</span> of{" "}
+                        {pdfInfo.pageCount} pages
+                      </span>
+                      <button
+                        onClick={() => setShowPageSelector(true)}
+                        className="text-red-600 hover:text-red-700 font-semibold text-xs underline underline-offset-2"
+                        id="edit-page-selection-btn"
+                      >
+                        Edit selection
+                      </button>
+                    </div>
+                  )}
+                  {bookletInfo && (
+                    <BookletOptions
+                      bookletInfo={bookletInfo}
+                      onGenerate={handleGenerate}
+                      isGenerating={false}
+                    />
+                  )}
                 </>
               )}
 
@@ -264,6 +298,14 @@ export default function Home() {
           <p className="text-xs text-stone-400">© {new Date().getFullYear()} Imposio</p>
         </div>
       </footer>
+
+      {showPageSelector && pdfInfo && (
+        <PageSelectorModal
+          file={pdfInfo.file}
+          pageCount={pdfInfo.pageCount}
+          onDone={handlePageSelectionDone}
+        />
+      )}
     </div>
   );
 }
