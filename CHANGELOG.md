@@ -6,6 +6,25 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.0.2] — 2026-06-07
+
+### Added
+- **Interactive Page Selector Modal**:
+  - Integrated `pdfjs-dist` to render client-side thumbnail previews of uploaded PDFs.
+  - Added a new `PageSelectorModal` component allowing users to visually select or deselect specific pages to include in their booklet.
+  - Implemented "Select All" and "Deselect All" bulk actions for rapid filtering.
+- **Application Flow Enhancements**:
+  - The upload flow now automatically opens the Page Selector after analyzing the PDF.
+  - Added a "Using X of Y pages" status banner with an "Edit selection" link in the Booklet Options view.
+
+### Changed
+- **PDF Generation Logic**:
+  - Upgraded `generateBookletPdf` to accept an optional `selectedPages` filter, safely copying only the user-selected pages into a temporary document before executing the booklet imposition sequence.
+- **Webpack Configuration**:
+  - Configured Turbopack `resolveAlias` in `next.config.ts` to alias the Node.js `canvas` dependency required by `pdfjs-dist` but unused in the browser.
+
+---
+
 ## [0.1.1] — 2026-06-02
 
 ### Added

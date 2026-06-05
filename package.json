@@ -1,6 +1,6 @@
 {
   "name": "imposio",
-  "version": "0.1.0",
+  "version": "1.0.2",
   "description": "A client-side PDF booklet imposition tool — rearranges PDF pages into print-ready booklet order, entirely in the browser.",
   "private": true,
   "license": "MIT",

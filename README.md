@@ -1,8 +1,8 @@
 # Imposio
 
-> Convert any PDF into a print-ready booklet in seconds — entirely in your browser.
+> Convert any PDF into a print-ready booklet in seconds, entirely in your browser.
 
-[![Version](https://img.shields.io/badge/version-0.1.1-red.svg)](./CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.0.2-red.svg)](./CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-stone.svg)](./LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-16.2.7-black.svg)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue.svg)](https://www.typescriptlang.org)
@@ -42,6 +42,7 @@ After duplex printing and folding, the booklet reads `1 → 2 → 3 → 4 → 5 
 | ✅ Privacy First | 100% client-side, zero server contact |
 | ✅ No Watermarks | Clean output PDFs |
 | ✅ Duplex Ready | Landscape layout, one sheet = two pages |
+| ✅ Page Selection | Visually filter pages before generating |
 | ✅ Progress Tracking | Live generation progress bar |
 | ✅ Instant Download | `filename-Booklet.pdf` with one click |
 
@@ -59,7 +60,8 @@ flowchart TD
     D -- No --> E[Show Error Message]
     E --> C
     D -- Yes --> F[analyzePdf\npdf-lib reads metadata]
-    F --> G[PdfInfoCard\nFile name · Pages · Size]
+    F --> Z[PageSelectorModal\nSelect pages to include]
+    Z --> G[PdfInfoCard\nFile name · Pages · Size]
     G --> H[computeBookletInfo\nPad to ×4, build imposition table]
     H --> I[BookletOptions\nShow stats + imposition preview]
     I --> J{User clicks\nGenerate}
@@ -105,6 +107,7 @@ graph TD
     PG --> FOOT["&lt;footer&gt;"]
 
     TOOL --> UPL["UploadZone\nuseDropzone · react-dropzone"]
+    TOOL --> SEL["PageSelectorModal\nPDF thumbnail rendering & selection"]
     TOOL --> INFO["PdfInfoCard\nFile metadata display"]
     TOOL --> OPTS["BookletOptions\nStats + imposition table + Generate btn"]
     TOOL --> PROG["ProgressBar\nLive progress during generation"]
@@ -206,6 +209,7 @@ imposio/
 | [TypeScript](https://www.typescriptlang.org) | ^5 | Type safety |
 | [Tailwind CSS](https://tailwindcss.com) | ^4 | Styling |
 | [pdf-lib](https://pdf-lib.js.org) | ^1.17.1 | PDF read + generate |
+| [pdfjs-dist](https://mozilla.github.io/pdf.js/) | ^6.0.227 | PDF thumbnail rendering |
 | [react-dropzone](https://react-dropzone.js.org) | ^15.0.0 | Drag & drop file input |
 | [lucide-react](https://lucide.dev) | ^1.17.0 | Icon set |
 | React | 19.2.4 | UI runtime |
@@ -268,10 +272,11 @@ npm run start
 
 1. **Open** Imposio in your browser
 2. **Upload** any PDF by dragging & dropping or clicking "Choose PDF"
-3. **Review** the detected page count and auto-calculated booklet layout
-4. **Click** "Generate Booklet PDF" and wait for processing
-5. **Download** the output `filename-Booklet.pdf`
-6. **Print** duplex (both sides), fold in half, and bind — done!
+3. **Select Pages** visually in the popup to pick which pages to include
+4. **Review** the detected page count and auto-calculated booklet layout
+5. **Click** "Generate Booklet PDF" and wait for processing
+6. **Download** the output `filename-Booklet.pdf`
+7. **Print** duplex (both sides), fold in half, and bind — done!
 
 ---
 
@@ -284,7 +289,7 @@ Imposio correctly handles:
 - PDFs with embedded images, fonts, and vector graphics
 - Large PDFs (progress bar shows generation status)
 
-Limitations in v0.1.1:
+Limitations in v1.0.2:
 
 - Encrypted/password-protected PDFs are not supported
 - Mixed page sizes use the first page as the reference dimension
