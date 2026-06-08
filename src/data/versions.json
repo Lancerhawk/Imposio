@@ -1,0 +1,66 @@
+[
+  {
+    "version": "1.0.2",
+    "date": "2026-06-07",
+    "changes": [
+      {
+        "type": "Added",
+        "items": [
+          "Interactive Page Selector Modal: Integrated pdfjs-dist to render client-side thumbnail previews of uploaded PDFs.",
+          "Added a new PageSelectorModal component allowing users to visually select or deselect specific pages to include in their booklet.",
+          "Implemented \"Select All\" and \"Deselect All\" bulk actions for rapid filtering.",
+          "Application Flow Enhancements: The upload flow now automatically opens the Page Selector after analyzing the PDF.",
+          "Added a \"Using X of Y pages\" status banner with an \"Edit selection\" link in the Booklet Options view."
+        ]
+      },
+      {
+        "type": "Changed",
+        "items": [
+          "PDF Generation Logic: Upgraded generateBookletPdf to accept an optional selectedPages filter, safely copying only the user-selected pages into a temporary document before executing the booklet imposition sequence.",
+          "Webpack Configuration: Configured Turbopack resolveAlias in next.config.ts to alias the Node.js canvas dependency required by pdfjs-dist but unused in the browser."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.1.1",
+    "date": "2026-06-02",
+    "changes": [
+      {
+        "type": "Added",
+        "items": [
+          "Unit Testing Suite (src/lib/booklet.test.ts): Comprehensive unit test coverage using Vitest for booklet page calculations, padding logic, imposition calculations, and sequence flattening.",
+          "GitHub Actions CI Pipeline (.github/workflows/ci.yml): Automated continuous integration runner to execute lint checks, TypeScript type-checks, and Vitest unit tests automatically on push and pull requests to main."
+        ]
+      },
+      {
+        "type": "Changed",
+        "items": [
+          "Professional Loading States: Replaced basic analysis text loader with a sophisticated, dual-ring pulsing branded loader for the PDF upload parsing step.",
+          "Upgraded the booklet generation screen with dynamic stage-by-stage status indicators (Loading source, Imposing pages, Saving PDF).",
+          "Added a file preparation state (\"Preparing Download...\") with a loading spinner to the booklet download button to prevent double-clicks and provide visual feedback.",
+          "Global Pointer Cursor: Added global stylesheet rules in src/app/globals.css ensuring all interactive buttons and anchor tags display the pointer cursor on hover, and not-allowed when disabled.",
+          "Linter Command Update: Replaced next lint with direct eslint . execution to support ESLint flat configurations on Next.js 16 projects correctly."
+        ]
+      },
+      {
+        "type": "Fixed",
+        "items": [
+          "Spine Gutter (Fold Margin): Integrated custom margin space between pages on imposed sheets to ensure the text isn't lost in the fold."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.1.0",
+    "date": "2026-06-02",
+    "changes": [
+      {
+        "type": "Initial Release",
+        "items": [
+          "First functional version of Imposio, a fully client-side PDF booklet imposition tool."
+        ]
+      }
+    ]
+  }
+]

@@ -31,7 +31,7 @@ export default function Hero({ onUploadClick }: HeroProps) {
 
         <p className="text-base text-stone-500 mb-10 max-w-xl mx-auto leading-relaxed">
           Upload any PDF and Imposio automatically rearranges pages into booklet
-          order — ready for duplex printing, folding, and binding.
+          order, ready for duplex printing, folding, and binding.
         </p>
 
         <button
