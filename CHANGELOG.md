@@ -6,6 +6,16 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ---
 
+## [1.0.3] — 2026-06-08
+
+### Added
+- **Global Version History**:
+  - Added a new `versions.json` data file structured from the CHANGELOG to hold all release notes.
+  - Created a `VersionHistory` client component with a persistent floating bottom-right button and an animated, scrollable modal timeline to display past releases.
+  - Injected the component into the global `layout.tsx` for app-wide accessibility.
+
+---
+
 ## [1.0.2] — 2026-06-07
 
 ### Added
@@ -118,5 +128,7 @@ First functional version of Imposio — a fully client-side PDF booklet impositi
 
 ---
 
+[1.0.3]: https://github.com/Lancerhawk/Imposio/releases/tag/v1.0.3
+[1.0.2]: https://github.com/Lancerhawk/Imposio/releases/tag/v1.0.2
 [0.1.1]: https://github.com/Lancerhawk/Imposio/releases/tag/v0.1.1
 [0.1.0]: https://github.com/Lancerhawk/Imposio/releases/tag/v0.1.0

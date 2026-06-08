@@ -1,5 +1,19 @@
 [
   {
+    "version": "1.0.3",
+    "date": "2026-06-08",
+    "changes": [
+      {
+        "type": "Added",
+        "items": [
+          "Global Version History: Added a new versions.json data file structured from the CHANGELOG to hold all release notes.",
+          "Created a VersionHistory client component with a persistent floating bottom-right button and an animated, scrollable modal timeline to display past releases.",
+          "Injected the component into the global layout.tsx for app-wide accessibility."
+        ]
+      }
+    ]
+  },
+  {
     "version": "1.0.2",
     "date": "2026-06-07",
     "changes": [

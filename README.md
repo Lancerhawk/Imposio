@@ -2,7 +2,7 @@
 
 > Convert any PDF into a print-ready booklet in seconds, entirely in your browser.
 
-[![Version](https://img.shields.io/badge/version-1.0.2-red.svg)](./CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.0.3-red.svg)](./CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-stone.svg)](./LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-16.2.7-black.svg)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue.svg)](https://www.typescriptlang.org)
@@ -289,7 +289,7 @@ Imposio correctly handles:
 - PDFs with embedded images, fonts, and vector graphics
 - Large PDFs (progress bar shows generation status)
 
-Limitations in v1.0.2:
+Limitations in v1.0.3:
 
 - Encrypted/password-protected PDFs are not supported
 - Mixed page sizes use the first page as the reference dimension
